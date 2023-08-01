@@ -70,8 +70,8 @@ struct _interpreter {
     PyObject *s_python_function_subplot2grid;
     PyObject *s_python_function_legend;
     PyObject *s_python_function_xlim;
-    PyObject *s_python_function_set_xscale;
-    PyObject *s_python_function_set_yscale;
+    PyObject *s_python_function_xscale;
+    PyObject *s_python_function_yscale;
     PyObject *s_python_function_ion;
     PyObject *s_python_function_ginput;
     PyObject *s_python_function_ylim;
@@ -248,8 +248,8 @@ private:
         s_python_function_subplot2grid = safe_import(pymod, "subplot2grid");
         s_python_function_legend = safe_import(pymod, "legend");
         s_python_function_xlim = safe_import(pymod, "xlim");
-        s_python_function_set_xscale = safe_import(pymod, "set_xscale");
-        s_python_function_set_yscale = safe_import(pymod, "set_yscale");
+        s_python_function_xscale = safe_import(pymod, "xscale");
+        s_python_function_yscale = safe_import(pymod, "yscale");
         s_python_function_ylim = safe_import(pymod, "ylim");
         s_python_function_title = safe_import(pymod, "title");
         s_python_function_axis = safe_import(pymod, "axis");
@@ -887,7 +887,7 @@ bool arrow(Numeric x, Numeric y, Numeric end_x, Numeric end_y, const std::string
     return res;
 }
 
-void set_xscale(std::string value,
+void xscale(std::string value,
  const std::map<std::string, std::string> &keywords = {})
 {
     detail::_interpreter::get();
@@ -901,16 +901,16 @@ void set_xscale(std::string value,
         PyDict_SetItemString(kwargs, it->first.c_str(), PyUnicode_FromString(it->second.c_str()));
     }
 
-    PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_set_xscale, args, kwargs);
+    PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_xscale, args, kwargs);
 
-    if(!res) throw std::runtime_error("Call to set_xscale() failed.");
+    if(!res) throw std::runtime_error("Call to xscale() failed.");
 
     Py_DECREF(args);
     Py_DECREF(kwargs);
     Py_DECREF(res);
 }
 
-void set_yscale(std::string value,
+void yscale(std::string value,
  const std::map<std::string, std::string> &keywords = {})
 {
     detail::_interpreter::get();
@@ -924,9 +924,9 @@ void set_yscale(std::string value,
         PyDict_SetItemString(kwargs, it->first.c_str(), PyUnicode_FromString(it->second.c_str()));
     }
 
-    PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_set_yscale, args, kwargs);
+    PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_yscale, args, kwargs);
 
-    if(!res) throw std::runtime_error("Call to set_yscale() failed.");
+    if(!res) throw std::runtime_error("Call to yscale() failed.");
 
     Py_DECREF(args);
     Py_DECREF(kwargs);
